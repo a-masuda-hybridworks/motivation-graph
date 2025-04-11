@@ -1,0 +1,266 @@
+/* 文字フォント */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+/* ボディ*/
+body {
+  font-family: "Noto Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #ffffff;
+}
+
+/* ナビゲーションバー */
+.navbar {
+  width: 90%;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  left: 70px;
+  background-color: #ffffff;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 5px solid #e5e5e5;
+  max-width: calc(100% - 50px);
+  margin: 0 20px;
+  box-sizing: border-box;
+}
+
+.navbar-logo {
+  padding: 10px 10px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 40px;
+}
+
+.navbar-menu {
+  list-style: none;
+  padding: 10px 20px;
+  margin: 0;
+  display: flex;
+}
+
+.navbar-item {
+  margin: 0 15px;
+}
+
+.navbar-item a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+}
+
+.navbar-item a:hover {
+  text-decoration: underline;
+  color:#FFD037;
+}
+
+.container {
+  background-color: #fff;
+  padding: 60px;
+  text-align: center;
+  width: 600px;
+  margin-top: 120px;
+  font-family: "Poppins", sans-serif;
+}
+
+.container h2 {
+  font-size: 32px;
+  color: #2a2a2a;
+  margin-bottom: 20px;
+}
+
+/* 入力フォーム */
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  flex: 0 0 180px;
+  margin-bottom: 0;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  flex: 1;
+  padding: 8px;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  border: 1px solid #E5E5E5;
+  border-radius: 5px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input[type="range"] {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+}
+
+/* モチベーション値 */
+.motivation-group {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 30px; 
+}
+
+.motivation-label {
+  flex: 0 0 180px;
+}
+
+.motivation-slider {
+  flex: 1;
+  position: relative;
+}
+
+.motivation-slider input[type="range"] {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+}
+
+.motivation-slider input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #d3d3d3;
+  border-radius: 5px;
+}
+
+.motivation-slider input[type="range"]::-webkit-slider-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: linear-gradient(to left, #0087b8, #00da8f);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -6px;
+}
+
+.motivation-slider input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: #d3d3d3;
+  border-radius: 5px;
+}
+
+.motivation-slider input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #ffd037;
+  cursor: pointer;
+}
+
+.motivation-slider input[type="range"]::-ms-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+.motivation-slider input[type="range"]::-ms-fill-lower {
+  background: #d3d3d3; 
+  border-radius: 5px;
+}
+
+.motivation-slider input[type="range"]::-ms-fill-upper {
+  background: #d3d3d3; 
+  border-radius: 5px;
+}
+
+.motivation-slider input[type="range"]::-ms-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #ffd037;
+  cursor: pointer;
+  margin-top: -6px; 
+}
+
+.motivation-value {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #000;
+  font-size: 14px;
+}
+
+.motivation-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* ボタン */
+.buttons {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+.buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
+/* 戻るボタン */
+.buttons button:first-child {
+  background-color: #f9f9f9;
+  color: #363636;
+  border: 2px solid #050505;
+  font-size: 16px;
+}
+
+/* 保存・更新ボタン */
+.buttons button:last-child {
+  background-color: #ffd037;
+  color: #363636;
+  font-size: 16px;
+}
+
+/* 削除ボタン */
+#deleteButton {
+  margin-top: 10px;
+  background-color: transparent;
+  color: red;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+/* スタイル適用 */
+.buttons button:first-child:hover,
+.buttons button:last-child:hover,
+#deleteButton:hover {
+  opacity: 0.5;
+}
