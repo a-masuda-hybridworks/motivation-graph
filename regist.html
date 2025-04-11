@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/detail-style.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/garlic.js"></script>
+    <title>新規追加</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="navbar-logo">
+          <img src="img/02_01_logo.svg" alt="Logo" />
+        </div>
+        <ul class="navbar-menu">
+          <li class="navbar-item"><a href="main.html">トップへ</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container">
+      <h2>モチベーション項目追加</h2>
+      <form id="registrationForm" data-persist="garlic">
+          <div class="form-group">
+          <label for="age">年齢</label>
+          <select id="age" name="age"></select>
+        </div>
+        <div class="form-group">
+          <label for="title">出来事</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="出来事を入力してください"
+          />
+          <div id="titleError" class="error"></div>
+        </div>
+        <div class="form-group">
+          <label for="reason">モチベーションの理由</label>
+          <textarea
+            id="reason"
+            name="reason"
+            rows="4"
+            placeholder="理由を入力してください"
+          ></textarea>
+          <div id="reasonError" class="error"></div>
+        </div>
+        <div class="motivation-group">
+          <label for="motivation" class="motivation-label"
+            >モチベーション値(%)</label
+          >
+          <div class="motivation-slider">
+            <input
+              type="range"
+              id="motivation"
+              name="motivation"
+              min="-100"
+              max="120"
+              value="0"
+              oninput="updateMotivationValue(this.value)"
+            />
+            <div class="motivation-value" id="motivationValue">0%</div>
+            <div class="motivation-labels">
+              <span>-100</span>
+              <span>0</span>
+              <span>120</span>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="return-button" type="button">戻る</button>
+          <button type="submit">追加</button>
+        </div>
+        <div id="failureMessage" class="failure-message"></div>
+      </form>
+    </div>
+
+    <script src="js/regist.js"></script>
+  </body>
+</html>
