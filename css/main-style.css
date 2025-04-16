@@ -106,11 +106,18 @@ body {
 
 .chart-container {
     position: relative;
-    width: 95%;
+    width: 100%;
+    max-width: 1200px;
     height: 500px; /* 増やした */
     margin: 0 auto; /* 中央寄せ */
     margin-top: 20px;
  
+}
+
+#table {
+    width: 100%;
+    max-width: 1200px; /* chart-container と同じ */
+    margin: 0 auto;
 }
 
 .button-container {
@@ -252,4 +259,18 @@ footer {
 .introduce{
     margin-top: 0px;
     margin-right: 20px;
+}
+
+.chart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    /* height: 500px; ← ここ削除 */
+}
+
+#motivationChart {
+    width: 100% !important;
+    height: 500px !important;
+    display: block;
+    margin: 0 auto;
 }

@@ -317,6 +317,16 @@ async function exportToExcelWithImage() {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('モチベーション');
 
+    //名前と年齢の取得
+    const name = document.querySelector('input[name="title"]').value || "未入力";
+    const age = document.getElementById('your_age').value || "未選択";
+
+    //名前・年齢をA1とA2に書き込む
+    worksheet.getCell('A1').value = `名前：${name}`;
+    worksheet.getCell('A2').value = `現在年齢：${age}歳`;
+    worksheet.getCell('A1').font = { bold: true };
+    worksheet.getCell('A2').font = { bold: true };
+
     // === 1. グラフを画像として取得・貼り付け ===
     const canvas = document.getElementById('motivationChart');
     const chartCanvas = await html2canvas(canvas);
@@ -331,7 +341,7 @@ async function exportToExcelWithImage() {
 
     // グラフ画像をA1から表示（大きめで）
     worksheet.addImage(imageId, {
-        tl: { col: 0, row: 0 },
+        tl: { col: 0, row: 3 },
         ext: { width: 600, height: 300 },
     });
 
@@ -360,19 +370,32 @@ async function exportToExcelWithImage() {
     });
 
     // 表の開始行を画像の高さに合わせて調整（約20行分）
-    const startRow = 20;
+    const startRow = 23;
 
     // ✅ ここで列幅を設定
     worksheet.columns = [
-        { width: 10 },  // 年齢
-        { width: 25 },  // 出来事
-        { width: 10 },  // %
-        { width: 40 },  // 理由
+        { width: 10, alignment: { wrapText: true } },  // 年齢
+        { width: 25, alignment: { wrapText: true } },  // 出来事
+        { width: 10, alignment: { wrapText: true } },  // %
+        { width: 40, alignment: { wrapText: true } }, // 理由
     ];
+
+    worksheet.pageSetup = {
+        paperSize: 9,              // A4
+        orientation: 'portrait', // 横向き印刷
+        fitToPage: true,          // 1ページに収める
+        fitToWidth: 1,
+        fitToHeight: 0,           // 高さは制限しない
+        horizontalCentered: true,
+        margins: {
+            left: 0.3, right: 0.3,
+            top: 0.5, bottom: 0.5,
+            header: 0.1, footer: 0.1
+        }
+    };
 
     rows.forEach((row, rowIndex) => {
         const insertedRow = worksheet.insertRow(startRow + rowIndex, row);
-        worksheet.insertRow(startRow + rowIndex, row);
 
          // 各セルに罫線を追加
         insertedRow.eachCell((cell) => {
@@ -382,6 +405,23 @@ async function exportToExcelWithImage() {
             bottom: { style: 'thin' },
             right:  { style: 'thin' }
             };
+
+            // 共通の中央揃え
+        cell.alignment = {
+            vertical: 'middle',
+            horizontal: 'center',
+            wrapText: true
+        };
+
+        // === ヘッダー行の装飾（1行目） ===
+        if (rowIndex === 0) {
+            cell.font = { bold: true };
+            cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFE2EFDA' }  // 薄い緑
+            };
+          } 
         });
     });
 

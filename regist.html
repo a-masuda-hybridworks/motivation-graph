@@ -14,9 +14,6 @@
         <div class="navbar-logo">
           <img src="img/02_01_logo.svg" alt="Logo" />
         </div>
-        <ul class="navbar-menu">
-          <li class="navbar-item"><a href="main.html">トップへ</a></li>
-        </ul>
       </nav>
     </header>
     <div class="container">
@@ -37,19 +34,7 @@
           <div id="titleError" class="error"></div>
         </div>
         <div class="form-group">
-          <label for="reason">モチベーションの理由</label>
-          <textarea
-            id="reason"
-            name="reason"
-            rows="4"
-            placeholder="理由を入力してください"
-          ></textarea>
-          <div id="reasonError" class="error"></div>
-        </div>
-        <div class="motivation-group">
-          <label for="motivation" class="motivation-label"
-            >モチベーション値(%)</label
-          >
+          <label for="motivation">モチベーション値(%)</label>
           <div class="motivation-slider">
             <input
               type="range"
@@ -58,6 +43,7 @@
               min="-100"
               max="120"
               value="0"
+              step="5"
               oninput="updateMotivationValue(this.value)"
             />
             <div class="motivation-value" id="motivationValue">0%</div>
@@ -67,6 +53,17 @@
               <span>120</span>
             </div>
           </div>
+        </div>
+        <div class="form-group textarea-wrapper">
+          <label for="reason">モチベーションの理由</label><div class="textarea-container">
+            <textarea
+              id="reason"
+              name="reason"
+              rows="4"
+              placeholder="理由を入力してください"
+            ></textarea>
+          </div>
+          <div id="reasonError" class="error"></div>
         </div>
         <div class="buttons">
           <button class="return-button" type="button">戻る</button>

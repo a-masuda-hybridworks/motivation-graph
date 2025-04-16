@@ -105,7 +105,7 @@ body {
 }
 
 .form-group textarea {
-  resize: vertical;
+  resize: both;
 }
 
 .form-group input[type="range"] {
@@ -115,20 +115,14 @@ body {
 }
 
 /* モチベーション値 */
-.motivation-group {
-  display: flex;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 30px; 
+.motivation-slider {
+  position: relative;
+  width: 100%;
+  flex: 1;
 }
 
 .motivation-label {
   flex: 0 0 180px;
-}
-
-.motivation-slider {
-  flex: 1;
-  position: relative;
 }
 
 .motivation-slider input[type="range"] {
@@ -167,7 +161,7 @@ body {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: #ffd037;
+  background: #02c40c;
   cursor: pointer;
 }
 
@@ -194,9 +188,14 @@ body {
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: #ffd037;
+  background: #ccc;
   cursor: pointer;
   margin-top: -6px; 
+}
+
+
+.motivation-slider input[type="range"]::-ms-thumb {
+  background: linear-gradient(to left, #0087b8, #00da8f);
 }
 
 .motivation-value {
@@ -263,4 +262,49 @@ body {
 .buttons button:last-child:hover,
 #deleteButton:hover {
   opacity: 0.5;
+}
+
+/* ラベルとtextareaの整列を自然に */
+.textarea-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 0;  /* ← 追加 */
+  padding-bottom: 0; /* ← 追加 */
+  gap: 4px;
+}
+
+/* ラベルとtextareaの幅統一 */
+.textarea-wrapper label {
+  font-size: 16px;
+  margin-bottom: 0;
+  padding-bottom: 0; /* ← 追加 */
+  line-height: 1.2;
+}
+
+/* textareaを包むdiv */
+.textarea-container {
+  width: 100%;
+  overflow: visible;
+}
+
+/* textarea本体のスタイル */
+.textarea-container textarea {
+  resize: both;
+  width: 100%;
+  min-width: 100px;
+  max-width: none;
+  min-height: 100px;
+  font-family: "Poppins", sans-serif;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #E5E5E5;
+  border-radius: 5px;
+}
+
+.textarea-wrapper label {
+  flex: unset !important;
+  width: auto !important;
+  margin-right: 0 !important;
 }
