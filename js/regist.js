@@ -79,15 +79,18 @@ document
                 let jsonArray = localStorage.getItem("yourMotivationData");
                 let jsonArray2 = localStorage.getItem("yourTitleData");
                 let jsonArray3 = localStorage.getItem("yourReasonData");
+                let jsonArray4 = localStorage.getItem("yourInfluencerData");
 
                 // JSON形式から配列に変換（存在しない場合は空の配列）
                 let motivationData = jsonArray ? JSON.parse(jsonArray) : [];
                 let titleData = jsonArray2 ? JSON.parse(jsonArray2) : [];
                 let reasonData = jsonArray3 ? JSON.parse(jsonArray3) : [];
+                let influencerArray = jsonArray4 ? JSON.parse(jsonArray4) : [];
 
                 // データを配列に追加
                 motivationData[age] = Number(motivation);
                 titleData[age] = title;
+                influencerArray[age] = influencer;
                 reasonData[age] = reason;
 
                 // ローカルストレージに保存
@@ -96,6 +99,7 @@ document
                     JSON.stringify(motivationData)
                 );
                 localStorage.setItem("yourTitleData", JSON.stringify(titleData));
+                localStorage.setItem("yourInfluencerData", JSON.stringify(influencerArray));
                 localStorage.setItem(
                     "yourReasonData",
                     JSON.stringify(reasonData)

@@ -328,7 +328,7 @@ async function exportToExcelWithImage() {
 
     const startRow = 24;
     worksheet.columns = [
-        { width: 6 }, { width: 28 }, { width: 28 }, { width: 10 }, { width: 50 }
+        { width: 6 }, { width: 28 }, { width: 16 }, { width: 10 }, { width: 50 }
     ];
 
     rows.forEach((row, rowIndex) => {
