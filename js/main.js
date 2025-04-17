@@ -312,7 +312,7 @@ async function exportToExcelWithImage() {
     worksheet.addImage(imageId, { tl: { col: 0, row: 4 }, ext: { width: 600, height: 300 } });
 
     const rows = [];
-    const headers = ["年齢", "出来事", "影響を与えた人物", "%", "モチベーションの理由"];
+    const headers = ["年齢", "出来事", "影響を与えた人物", "幸福度合", "幸福度の理由"];
     rows.push(headers);
 
     for (let i = 0; i < motivationData.length; i++) {
@@ -328,7 +328,7 @@ async function exportToExcelWithImage() {
 
     const startRow = 24;
     worksheet.columns = [
-        { width: 6 }, { width: 28 }, { width: 28 }, { width: 6 }, { width: 50 }
+        { width: 6 }, { width: 28 }, { width: 28 }, { width: 10 }, { width: 50 }
     ];
 
     rows.forEach((row, rowIndex) => {
