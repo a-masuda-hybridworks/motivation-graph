@@ -2,6 +2,7 @@
 const motivationData = JSON.parse(localStorage.getItem("yourMotivationData")) || [];
 const titleData = JSON.parse(localStorage.getItem("yourTitleData")) || [];
 const reasonData = JSON.parse(localStorage.getItem("yourReasonData")) || [];
+const influencerData = JSON.parse(localStorage.getItem("yourInfluencerData")) || [];
 
 // 年齢のオプションを生成
 const ageSelect = document.getElementById("age");
@@ -52,6 +53,7 @@ document
         const title = document.getElementById("title").value;
         const reason = document.getElementById("reason").value;
         const motivation = document.getElementById("motivation").value;
+        const influencer = document.getElementById("influencer").value;
 
         let hasError = false;
 
@@ -61,6 +63,9 @@ document
             hasError = true;
         } else if (title.length > 50) {
             alert("出来事は50字以内で入力してください");
+            hasError = true;
+        } else if (influencer.trim() === "") {
+            alert("影響を与えた人物がいなければ「なし」と記載してください。");
             hasError = true;
         } else if (reason.length > 255) {
             alert("理由は255字以内で入力してください");

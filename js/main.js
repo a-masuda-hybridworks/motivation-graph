@@ -1,104 +1,72 @@
 // canvas要素を取得
 var ctx = document.getElementById('motivationChart').getContext('2d');
 
-// ローカルストレージから既存のデータを取得
 var storedMotivationData = localStorage.getItem('yourMotivationData');
 var storedTitleData = localStorage.getItem('yourTitleData');
 var storedReasonData = localStorage.getItem('yourReasonData');
+var storedInfluencerData = localStorage.getItem('yourInfluencerData');
 var yourageData = localStorage.getItem('yourageData');
 
-// JSON形式から配列に変換、データが存在しない場合は空の配列を使用
 var motivationData = storedMotivationData ? JSON.parse(storedMotivationData) : [];
 var titleData = storedTitleData ? JSON.parse(storedTitleData) : [];
 var reasonData = storedReasonData ? JSON.parse(storedReasonData) : [];
+var influencerData = storedInfluencerData ? JSON.parse(storedInfluencerData) : [];
 
-// JSON形式から数値型に変換
+if(motivationData[0] == null){ motivationData[0] = 0; }
 
-// モチベーションデータが空の時はデータポイントとして0を用意（デザイン調整）
-if(motivationData[0] == null){
-    motivationData[0] = 0;
-}
-
-// 更新された配列をローカルストレージに保存
 localStorage.setItem('yourMotivationData', JSON.stringify(motivationData));
 localStorage.setItem('yourTitleData', JSON.stringify(titleData));
 localStorage.setItem('yourReasonData', JSON.stringify(reasonData));
+localStorage.setItem('yourInfluencerData', JSON.stringify(influencerData));
 
-/**
- * テーブルにデータを表示する関数
-*/
 function populateTable() {
     const tbody = document.getElementById('data-table-body');
-    tbody.innerHTML = ''; // 既存の行をクリア
+    tbody.innerHTML = '';
 
     for (let i = 0; i < motivationData.length; i++) {
-        if (motivationData[i] === undefined || motivationData[i] === null) {
-            continue; // データが空ならスキップ
-        }
-
-        // 初期データポイント:0は表の内容として表示しない
-        if (i == 0 ) {
-            if(motivationData[0] == 0 && titleData[0] === null && reasonData[0] === null){
-                continue;//スキップ
-            }
-        }
+        if (motivationData[i] === undefined || motivationData[i] === null) continue;
+        if (i == 0 && motivationData[0] == 0 && titleData[0] === null && reasonData[0] === null) continue;
 
         const row = document.createElement('tr');
 
         const ageCell = document.createElement('td');
         ageCell.textContent = i;
-
-        if (motivationData.length == i + 1) {
-            ageCell.classList.add('first-td');
-        }
         row.appendChild(ageCell);
 
         const titleCell = document.createElement('td');
-
-        if (titleData[i] !== undefined) {
-            titleCell.textContent = titleData[i];
-        }
+        titleCell.textContent = titleData[i] || "";
         row.appendChild(titleCell);
 
+        const influencerCell = document.createElement('td');
+        influencerCell.textContent = influencerData[i] || "";
+        row.appendChild(influencerCell);
+
         const motivationCell = document.createElement('td');
-        if (motivationData[i] !== undefined) {
-            motivationCell.innerHTML = motivationData[i]; // HTML内容を表示
-        }
+        motivationCell.textContent =
+        motivationData[i] !== undefined && motivationData[i] !== null
+        ? motivationData[i] + "%"
+        : "";
         row.appendChild(motivationCell);
 
         const reasonCell = document.createElement('td');
-        if (reasonData[i] !== undefined) {
-            reasonCell.innerHTML = reasonData[i]; // HTML内容を表示
-        }
+        reasonCell.textContent = reasonData[i] || "";
         row.appendChild(reasonCell);
 
-        // 編集ボタン用セル
         const detailCell = document.createElement('td');
         const detailButton = document.createElement('button');
         detailButton.textContent = '編集';
-
         detailCell.classList.add('detail-cell');
         detailButton.classList.add('detail-button');
-        if (motivationData.length == i + 1) {
-            detailCell.id = 'last-td';
-        }
-        // ボタンクリック時の処理
         detailButton.onclick = function () {
-            const age = i;
-            const motivation = motivationData[i];
-            const title = titleData[i];
-            const reason = reasonData[i];
-            // 詳細ページにリダイレクト、クエリパラメータとしてデータを送信
-            window.location.href = `edit.html?motivation=${encodeURIComponent(motivation)}&age=${age}&title=${encodeURIComponent(title)}&reason=${encodeURIComponent(reason)}`;
+            window.location.href = `edit.html?motivation=${encodeURIComponent(motivationData[i])}&age=${i}&title=${encodeURIComponent(titleData[i])}&reason=${encodeURIComponent(reasonData[i])}&influencer=${encodeURIComponent(influencerData[i] || '')}`;
         };
-
         detailCell.appendChild(detailButton);
         row.appendChild(detailCell);
+
         tbody.appendChild(row);
     }
 }
 
-// 作成したテーブルを表示
 populateTable();
 
 
@@ -317,124 +285,74 @@ async function exportToExcelWithImage() {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('モチベーション');
 
-    //名前と年齢の取得
     const name = document.querySelector('input[name="title"]').value || "未入力";
     const age = document.getElementById('your_age').value || "未選択";
 
-    //名前・年齢をA1とA2に書き込む
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    const dateStr = `出力日：${y}/${m}/${d}`;
+
     worksheet.getCell('A1').value = `名前：${name}`;
     worksheet.getCell('A2').value = `現在年齢：${age}歳`;
-    worksheet.getCell('A1').font = { bold: true };
-    worksheet.getCell('A2').font = { bold: true };
+    worksheet.getCell('A3').value = dateStr;
 
-    // === 1. グラフを画像として取得・貼り付け ===
+    worksheet.getCell('A1').font = { bold: true, size: 9 };
+    worksheet.getCell('A2').font = { bold: true, size: 9 };
+    worksheet.getCell('A3').font = { bold: true, size: 9 };
+
     const canvas = document.getElementById('motivationChart');
     const chartCanvas = await html2canvas(canvas);
     const chartDataUrl = chartCanvas.toDataURL('image/png');
     const imageBlob = await (await fetch(chartDataUrl)).blob();
     const arrayBuffer = await imageBlob.arrayBuffer();
 
-    const imageId = workbook.addImage({
-        buffer: arrayBuffer,
-        extension: 'png',
-    });
+    const imageId = workbook.addImage({ buffer: arrayBuffer, extension: 'png' });
+    worksheet.addImage(imageId, { tl: { col: 0, row: 4 }, ext: { width: 600, height: 300 } });
 
-    // グラフ画像をA1から表示（大きめで）
-    worksheet.addImage(imageId, {
-        tl: { col: 0, row: 3 },
-        ext: { width: 600, height: 300 },
-    });
-
-    // === 2. 表データを画像の下に挿入 ===
-    const table = document.querySelector("#table table");
     const rows = [];
-    const headers = [];
-
-    // 最後の列（編集）を除外
-    table.querySelectorAll("thead th").forEach((th, index, arr) => {
-        if (index < arr.length - 1) {
-            headers.push(th.innerText);
-        }
-    });
+    const headers = ["年齢", "出来事", "影響を与えた人物", "%", "モチベーションの理由"];
     rows.push(headers);
 
-    table.querySelectorAll("tbody tr").forEach(tr => {
+    for (let i = 0; i < motivationData.length; i++) {
+        if (motivationData[i] === undefined || motivationData[i] === null) continue;
         const row = [];
-        const cells = tr.querySelectorAll("td");
-        cells.forEach((td, index) => {
-            if (index < cells.length - 1) {
-                row.push(td.innerText);
-            }
-        });
+        row.push(i); // 年齢
+        row.push(titleData[i] || ""); // 出来事
+        row.push(influencerData[i] || ""); // 影響を与えた人物
+        row.push(motivationData[i] !== undefined && motivationData[i] !== null ? motivationData[i] + "%" : "0%"); // ％
+        row.push(reasonData[i] || ""); // モチベーションの理由
         rows.push(row);
-    });
+    }
 
-    // 表の開始行を画像の高さに合わせて調整（約20行分）
-    const startRow = 23;
-
-    // ✅ ここで列幅を設定
+    const startRow = 24;
     worksheet.columns = [
-        { width: 10, alignment: { wrapText: true } },  // 年齢
-        { width: 25, alignment: { wrapText: true } },  // 出来事
-        { width: 10, alignment: { wrapText: true } },  // %
-        { width: 40, alignment: { wrapText: true } }, // 理由
+        { width: 6 }, { width: 28 }, { width: 28 }, { width: 6 }, { width: 50 }
     ];
-
-    worksheet.pageSetup = {
-        paperSize: 9,              // A4
-        orientation: 'portrait', // 横向き印刷
-        fitToPage: true,          // 1ページに収める
-        fitToWidth: 1,
-        fitToHeight: 0,           // 高さは制限しない
-        horizontalCentered: true,
-        margins: {
-            left: 0.3, right: 0.3,
-            top: 0.5, bottom: 0.5,
-            header: 0.1, footer: 0.1
-        }
-    };
 
     rows.forEach((row, rowIndex) => {
         const insertedRow = worksheet.insertRow(startRow + rowIndex, row);
-
-         // 各セルに罫線を追加
-        insertedRow.eachCell((cell) => {
-        cell.border = {
-            top:    { style: 'thin' },
-            left:   { style: 'thin' },
-            bottom: { style: 'thin' },
-            right:  { style: 'thin' }
+        insertedRow.eachCell((cell, colNumber) => {
+            cell.border = {
+                top: { style: 'thin' }, left: { style: 'thin' },
+                bottom: { style: 'thin' }, right: { style: 'thin' }
             };
-
-            // 共通の中央揃え
-        cell.alignment = {
-            vertical: 'middle',
-            horizontal: 'center',
-            wrapText: true
-        };
-
-        // === ヘッダー行の装飾（1行目） ===
-        if (rowIndex === 0) {
-            cell.font = { bold: true };
-            cell.fill = {
-                type: 'pattern',
-                pattern: 'solid',
-                fgColor: { argb: 'FFE2EFDA' }  // 薄い緑
-            };
-          } 
+            cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+            if (rowIndex === 0) {
+                cell.font = { bold: true, size: 9 };
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2EFDA' } };
+            } else {
+                cell.font = { size: 9 };
+            }
         });
     });
 
-    // === ファイル名に日付を含めて保存 ===
-    const today = new Date();
-    const y = today.getFullYear();
-    const m = String(today.getMonth() + 1).padStart(2, '0');
-    const d = String(today.getDate()).padStart(2, '0');
     const fileName = `モチベーショングラフ_${y}${m}${d}.xlsx`;
-
     const buffer = await workbook.xlsx.writeBuffer();
     saveAs(new Blob([buffer]), fileName);
 }
+
 
 const toggleButtonState = async (isEnabled, text) => {
     const button = document.getElementById('downloadButton');
@@ -442,4 +360,22 @@ const toggleButtonState = async (isEnabled, text) => {
     button.innerText = text;
 }
 
+function showHelp(id) {
+    // 一度全部非表示に
+    document.querySelectorAll('.help-popup').forEach(p => p.style.display = 'none');
+    const overlay = document.getElementById('overlay');
+    const target = document.getElementById(id);
+    if (target && overlay) {
+      overlay.style.display = 'block';
+      target.style.display = 'block';
+    }
+  }
+
+  function closeHelp() {
+    document.querySelectorAll('.help-popup').forEach(p => p.style.display = 'none');
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+    }
+  }
 

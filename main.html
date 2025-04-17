@@ -28,6 +28,10 @@
         <div class="navbar-logo">
           <img src="img/02_01_logo.svg" alt="Logo" />
         </div>
+        <div class="navbar-help">
+            <button class="help-button" onclick="showHelp('help1')">ライフラインチャートとは</button>
+            <button class="help-button" onclick="showHelp('help2')">ライフラインチャート作成方法</button>
+          </div>
     </nav>
     <div id="content">
         <div class="button-container">
@@ -84,10 +88,11 @@
             <table class="table1" id="table">
                 <thead>
                     <tr>
-                        <th class = "age">年齢</th>
-                        <th class = "title">出来事</th>
-                        <th class = "motivation">%</th>
-                        <th class = "reason">モチベーションの理由</th>
+                        <th class="age">年齢</th>
+    　　　　　　　　　　　<th class="title">出来事</th>
+    　　　　　　　　　　　<th class="influencer">影響を与えた人物</th>
+    　　　　　　　　　　　<th class="motivation">％</th>
+    　　　　　　　　　　　<th class="reason">モチベーションの理由</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -99,6 +104,46 @@
             © 2025 HYBRIDWORKS. All Rights Reserved.
         </footer>
     </div>
+    <div id="help1" class="help-popup">
+        <span class="close-btn" onclick="closeHelp('help1')">×</span>
+        <p>ライフラインチャートとは、自分のこれまでの人生を幸福度という尺度で1本の曲線で表現したものです。表の横軸は時間軸、縦軸は自分が感じている幸福度を表しています。</p>
+
+        <p>ライフラインチャートを作成することで、自分の人生でどのような基準で選択してきたのか、つまりは自分の価値観を知ることができるようになります。</p>
+
+        <p><strong>★主な目的</strong></p>
+        <ul>
+          <li>自分のキャリアを客観的に振り返ることができる</li>
+          <li>自分の価値観・強みが分かる</li>
+          <li>他人にアウトプットすることで新たな発見がある</li>
+          <li>今後のキャリア形成のヒントが見つかる</li>
+        </ul>
+    </div>
+      <div id="help2" class="help-popup">
+        <span class="close-btn" onclick="closeHelp('help2')">×</span>
+        <p><strong>〇作成にあたっての心構え</strong></p>
+
+        <p><strong>出来事（例）</strong><br>
+        人生の転機（就職、転職、昇任・降格、結婚、出産、育児、介護、病気、怪我など）<br>
+        成功体験（嬉しかった経験、楽しかった経験、達成感・充実感が得られた経験）<br>
+        失敗体験（辛かった経験、苦しかった経験、嫌だったことなど）</p>
+
+        <p>大切なのは「過去の事実」をただまとめるのではなく、<br>
+        <strong>なぜそれが転機だと思ったのか、そのときの感情を含めて振り返る</strong>ことです。</p>
+
+        <p>理由は、「なぜ」の部分にあなたの<strong>価値観や強み</strong>が隠れているからです。</p>
+
+        <p>また、エピソードの中で自分に<strong>影響を与えた人</strong>も書き出してみましょう。<br>
+        （例：親、先生、親友、彼氏、彼女、配偶者、上司、師匠など）</p>
+
+        <p><strong>〇機能説明</strong></p>
+        <ul>
+            <li>画面左上に「名前」「年齢」を入力</li>
+            <li>「新規追加」ボタンから各項目を入力</li>
+            <li>「追加」ボタンを押すとグラフが反映</li>
+            <li>完了後、「Excel」や「PDF」で出力可能</li>
+        </ul>
+      </div>
+      <div id="overlay" class="overlay" onclick="closeHelp()"></div>
     <script src="js/main.js"></script>
 </body>
 </html>

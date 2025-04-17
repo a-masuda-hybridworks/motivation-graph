@@ -37,6 +37,9 @@ window.onload = function () {
     if (params.title) {
         document.getElementById("title").value = params.title;
     }
+    if (params.influencer) {
+        document.getElementById("influencer").value = params.influencer;
+    }      
     if (params.reason) {
         document.getElementById("reason").value = params.reason;
     }
@@ -85,6 +88,7 @@ document.getElementById("registrationForm").addEventListener("submit", function 
     // 入力値を取得
     const age = document.getElementById("age").value;
     const title = document.getElementById("title").value;
+    const influencer = document.getElementById("influencer").value;
     const reason = document.getElementById("reason").value;
     const motivation = document.getElementById("motivation").value;
 
@@ -97,8 +101,10 @@ document.getElementById("registrationForm").addEventListener("submit", function 
     } else if (title.length > 50) {
         alert("タイトルは50字以内で入力してください");
         hasError = true;
+    } else if (influencer.trim() === "") {
+        alert("影響を与えた人物がいなければ「なし」と記載してください。");
+        hasError = true;
     }
-
     if (reason.length > 255) {
         alert("理由は255字以内で入力してください");
         hasError = true;
@@ -111,28 +117,33 @@ document.getElementById("registrationForm").addEventListener("submit", function 
             const jsonArray = localStorage.getItem('yourMotivationData');
             const jsonArray2 = localStorage.getItem('yourTitleData');
             const jsonArray3 = localStorage.getItem('yourReasonData');
+            const jsonArray4 = localStorage.getItem("yourInfluencerData");
 
             // JSON形式から配列に変換
             const motivationData = JSON.parse(jsonArray) || [];
             const titleData = JSON.parse(jsonArray2) || [];
             const reasonData = JSON.parse(jsonArray3) || [];
+            const influencerData = jsonArray4 ? JSON.parse(jsonArray4) : [];
 
             // 年齢が異なる場合の処理
             const originalAge = getQueryParams().age;
             if (originalAge && originalAge !== age) {
                 motivationData.splice(originalAge, 1); // 元の年齢のデータを削除
                 titleData.splice(originalAge, 1);
+                influencerData.splice(originalAge, 1);
                 reasonData.splice(originalAge, 1);
             }
 
             // データを配列に追加
             motivationData[age] = Number(motivation);
             titleData[age] = title;
+            influencerData[age] = influencer;
             reasonData[age] = reason;
 
             // ローカルストレージに保存
             localStorage.setItem('yourMotivationData', JSON.stringify(motivationData));
             localStorage.setItem('yourTitleData', JSON.stringify(titleData));
+            localStorage.setItem("yourInfluencerData", JSON.stringify(influencerData));
             localStorage.setItem('yourReasonData', JSON.stringify(reasonData));
 
             // 登録完了メッセージ
@@ -170,10 +181,12 @@ document.getElementById("deleteButton").addEventListener("click", function () {
         const jsonArray = localStorage.getItem('yourMotivationData');
         const jsonArray2 = localStorage.getItem('yourTitleData');
         const jsonArray3 = localStorage.getItem('yourReasonData');
+        const jsonArray4 = localStorage.getItem("yourInfluencerData");
         // JSON形式から配列に変換
         const motivationData = JSON.parse(jsonArray) || [];
         const titleData = JSON.parse(jsonArray2) || [];
         const reasonData = JSON.parse(jsonArray3) || [];
+        const influencerData = jsonArray4 ? JSON.parse(jsonArray4) : [];
 
         console.log(age);
 
@@ -181,16 +194,19 @@ document.getElementById("deleteButton").addEventListener("click", function () {
         if (age == 0) {
             motivationData[age] = null;
             titleData[age] = null;
+            influencerData[age] = null;
             reasonData[age] = null;
         } else {
             motivationData.splice(age, 1);
             titleData.splice(age, 1);
+            influencerData.splice(age, 1);
             reasonData.splice(age, 1);
         }
 
         // ローカルストレージに保存
         localStorage.setItem('yourMotivationData', JSON.stringify(motivationData));
         localStorage.setItem('yourTitleData', JSON.stringify(titleData));
+        localStorage.setItem('yourInfluencerData', JSON.stringify(influencerData));
         localStorage.setItem('yourReasonData', JSON.stringify(reasonData));
         alert("データが削除されました");
         window.location.href = `main.html`;
