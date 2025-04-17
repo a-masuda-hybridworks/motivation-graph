@@ -245,7 +245,7 @@ const captureAndDownloadPDF = async () => {
     const d = String(numberDate).padStart(2, "0");
     const result = (y + m + d);
 
-    const pdf_name = `モチベーショングラフ_${result}.pdf`;
+    const pdf_name = `ライフラインチャート_${result}.pdf`;
 
     toggleButtonState(false, 'Processing...');
     const { jsPDF } = window.jspdf;
@@ -348,7 +348,7 @@ async function exportToExcelWithImage() {
         });
     });
 
-    const fileName = `モチベーショングラフ_${y}${m}${d}.xlsx`;
+    const fileName = `ライフラインチャート_${y}${m}${d}.xlsx`;
     const buffer = await workbook.xlsx.writeBuffer();
     saveAs(new Blob([buffer]), fileName);
 }
